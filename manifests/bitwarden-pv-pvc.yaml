@@ -7,7 +7,7 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: your-storage-class-name
+  storageClassName: local-storage-node
   hostPath:
     path: /home/serveradmin   # Update the path according to your cluster's file system
 
@@ -22,5 +22,5 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: your-storage-class-name
+  storageClassName: local-storage-node
   volumeName: bitwardenrs-pv

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: bitwardenrs
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: bitwardenrs
@@ -33,12 +33,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bitwardenrs-service
+  name: bitwarden
 spec:
+  ipFamilyPolicy: PreferDualStack
   selector:
     app: bitwardenrs
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 8100
   type: LoadBalancer

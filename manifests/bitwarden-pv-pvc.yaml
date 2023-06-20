@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/bitwardenrs   # Update the path according to your cluster's file system
+    path: /home/serveradmin   # Update the path according to your cluster's file system
 
 ---
 apiVersion: v1

@@ -7,3 +7,16 @@ spec:
     - name: cloudflared
       image: cloudflare/cloudflared:latest
       command: ["tunnel", "--no-autoupdate", "run", "--token", "eyJhIjoiYTIwZTI3OTc1ZTc2MTk3OTY0YTcwMmU0M2RkMjljZmYiLCJ0IjoiNTNiMTUzZTUtZmYxNS00MzdhLWE3ZGMtMTIwNWZiMzdmN2Q0IiwicyI6Ik1HVTBNamRqWkRFdFltTTNaQzAwWWpsaExUazFOMk10TkRBd1kySXhPRFEyTWpZeiJ9"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflared-service
+spec:
+  selector:
+    app: cloudflared
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  type: LoadBalancer

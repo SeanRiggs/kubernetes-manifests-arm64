@@ -22,7 +22,7 @@ spec:
               value: "1001"
             - name: TZ
               value: "America/Denver"
-            #- name: CONTEXT_PATH
+            - name: CONTEXT_PATH
               #value: "url-base" # optional
           ports:
             - containerPort: 4040

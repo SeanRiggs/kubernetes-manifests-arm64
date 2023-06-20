@@ -17,9 +17,9 @@ spec:
           image: lscr.io/linuxserver/booksonic-air:latest
           env:
             - name: PUID
-              value: "1001"
+              value: "1000"
             - name: PGID
-              value: "1001"
+              value: "1000"
             - name: TZ
               value: "America/Denver"
             - name: CONTEXT_PATH

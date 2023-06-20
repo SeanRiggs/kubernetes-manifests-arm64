@@ -31,13 +31,13 @@ spec:
               mountPath: "/config"
             - name: mediashare-volume
               mountPath: "/mediashare"
-          volumes:
-            - name: config-volume
-              persistentVolumeClaim:
-                claimName: nfs-pvc-config
-            - name: mediashare-volume
-              persistentVolumeClaim:
-                claimName: nfs-pvc-mediashare
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc-config
+        - name: mediashare-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc-mediashare
 ---
 apiVersion: v1
 kind: Service

@@ -24,6 +24,7 @@ Kubernetes Manifests for arm64 is your secret weapon for harnessing the true pow
 
 2. Clone the Repository: Clone this repository to your local machine using the following command:
 
+https://github.com/SeanRiggs/kubernetes-manifests-arm64.git
 
 3. Explore the Manifests: Browse through our mind-bending collection of manifests inside the `manifests/` directory. Discover the possibilities and choose the ones optimized for arm64 architecture that align with your project.
 

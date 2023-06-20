@@ -1,26 +1,24 @@
+# bitwardenrs-pv-pvc.yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: bitwarden-pv
+  name: bitwardenrs-pv
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: manual
   nfs:
-    path: /Backups
     server: 192.168.128.81
+    path: /Backups
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: bitwarden-pvc
+  name: bitwardenrs-pvc
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: manual
   resources:
     requests:
       storage: 1Gi

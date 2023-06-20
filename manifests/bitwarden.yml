@@ -1,46 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bitwarden
+  name: bitwardenrs
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bitwarden
+      app: bitwardenrs
   template:
     metadata:
       labels:
-        app: bitwarden
+        app: bitwardenrs
     spec:
       containers:
-        - name: bitwarden
+        - name: bitwardenrs
           image: vaultwarden/server
           resources:
             limits:
-              cpu: "1"
-              memory: "1Gi"
+              cpu: "2"
+              memory: "2Gi"
             requests:
               cpu: "0.5"
               memory: "512Mi"
-          ports:
-            - containerPort: 80
           volumeMounts:
-            - name: bitwarden-data
+            - name: data-volume
               mountPath: /data
       volumes:
-        - name: bitwarden-data
+        - name: data-volume
           persistentVolumeClaim:
-            claimName: bitwarden-pvc
+            claimName: bitwardenrs-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: bitwarden
+  name: bitwardenrs-service
 spec:
   selector:
-    app: bitwarden
+    app: bitwardenrs
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8100
   type: LoadBalancer

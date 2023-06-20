@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: bitwarden
-          image: bitwardenrs/server:latest
+          image: vaultwarden/server
           resources:
             limits:
               cpu: "1"

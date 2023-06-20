@@ -39,6 +39,6 @@ spec:
     app: bitwardenrs
   ports:
     - protocol: TCP
-      port: 80
+      port: 8100
       targetPort: 8100
   type: LoadBalancer

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booksonic-air-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: booksonic-air
+  template:
+    metadata:
+      labels:
+        app: booksonic-air
+    spec:
+      containers:
+        - name: booksonic-air
+          image: lscr.io/linuxserver/booksonic-air:latest
+          env:
+            - name: PUID
+              value: "1001"
+            - name: PGID
+              value: "1001"
+            - name: TZ
+              value: "America/Denver"
+            - name: CONTEXT_PATH
+              value: "url-base" # optional
+          ports:
+            - containerPort: 4040
+          volumeMounts:
+            - name: config-volume
+              mountPath: "/config"
+            - name: mediashare-volume
+              mountPath: "/mediashare"
+          volumes:
+            - name: config-volume
+              persistentVolumeClaim:
+                claimName: nfs-pvc-config
+            - name: mediashare-volume
+              persistentVolumeClaim:
+                claimName: nfs-pvc-mediashare
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booksonic-air-service
+spec:
+  ipFamilyPolicy: PreferDualStack
+  selector:
+    app: booksonic-air
+  ports:
+    - port: 4040
+      targetPort: 4040
+  type: LoadBalancer

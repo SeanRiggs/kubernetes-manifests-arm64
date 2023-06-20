@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: booksonic-air-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: booksonic-air
@@ -22,8 +22,8 @@ spec:
               value: "1001"
             - name: TZ
               value: "America/Denver"
-            - name: CONTEXT_PATH
-              value: "url-base" # optional
+            #- name: CONTEXT_PATH
+              #value: "url-base" # optional
           ports:
             - containerPort: 4040
           volumeMounts:
@@ -44,7 +44,6 @@ kind: Service
 metadata:
   name: booksonic-air-service
 spec:
-  ipFamilyPolicy: PreferDualStack
   selector:
     app: booksonic-air
   ports:

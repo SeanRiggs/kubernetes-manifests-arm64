@@ -1,3 +1,6 @@
+#example of multiple NFS config adjust storage size, add storage class and update path, names, and server IPs as needed
+
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:

@@ -46,7 +46,7 @@ git clone https://github.com/SeanRiggs/kubernetes-manifests-arm64.git
 
 ## Contribution Guidelines
 
-We believe that collaboration fuels innovation. If you have any mind-bending manifest creations or improvements to share for ARM64 architecture, we welcome your contributions. To contribute to Kubernetes Manifests for ARM64, please follow the guidelines outlined in [CONTRIBUTING.md](https://github.com/your-username/kubernetes-manifests-arm64/blob/main/CONTRIBUTING.md). (COMING SOON)
+We believe that collaboration fuels innovation. If you have any mind-bending manifest creations or improvements to share for ARM64 architecture, we welcome your contributions. To contribute to Kubernetes Manifests for ARM64, please follow the guidelines outlined in [CONTRIBUTING.md](https://github.com/SeanRiggs/kubernetes-manifests-arm64/blob/main/CONTRIBUTING.md).
 
 Let's unlock the true potential of Kubernetes on ARM64 together!
 

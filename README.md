@@ -1,43 +1,57 @@
-# Kubernetes Manifests for arm64
+# Kubernetes Manifests for ARM64
 
-![Kubernetes Manifests for arm64 Logo](https://i0.wp.com/www.donaldsimpson.co.uk/wp-content/uploads/sites/6/2019/05/minikube.png?w=344&ssl=1)
+![Kubernetes Manifests for ARM64 Logo](https://i0.wp.com/www.donaldsimpson.co.uk/wp-content/uploads/sites/6/2019/05/minikube.png?w=344&ssl=1)
 
-Welcome to Kubernetes Manifests for arm64! 🚀
+Welcome to the extraordinary world of Kubernetes Manifests for ARM64! 🚀
 
-This repository is a collection of mind-blowing Kubernetes manifests optimized for arm64 architecture. Unleash the full potential of your arm64 infrastructure with seamless deployments, scalable configurations, and rock-solid reliability.
+This repository houses an impressive collection of mind-blowing Kubernetes manifests specially designed to unleash the full potential of your ARM64 infrastructure. Experience seamless deployments, scalable configurations, and unparalleled reliability like never before.
 
-## What are Kubernetes Manifests for arm64?
+## Infrastructure Details
 
-Kubernetes Manifests for arm64 is your secret weapon for harnessing the true power of Kubernetes on arm64 architecture. Dive into a world of cutting-edge deployments and unlock the possibilities of your arm64-based Kubernetes clusters.
+These manifests have been meticulously built, deployed, and tested on the following infrastructure (adjust as needed):
 
-## Features
+- 4-node Proxmox cluster consisting of ARM64 Raspberry Pi 4 Model B 8GB devices.
+- 5-node high-availability Kubernetes k3s cluster. The cluster is built on 5 different virtual machines running Ubuntu Cloud Image (Jammy 22.04), leveraging etcd, KubeVIP, and MetalLB.
+- The cluster was deployed using Ansible, following Techno Tim's deployment method as demonstrated in this YouTube video: [Kubernetes Deployment by Techno Tim](https://youtu.be/CbkEWcUZ7zM).
+- Additionally, an NFS share is utilized, which is deployed on a separate Raspberry Pi 4 Model B 4GB running OMV (OpenMediaVault) with a 1TB USB hard drive.
 
-🌟 Effortless Deployments: Experience the thrill of effortless deployments tailored for arm64 architecture. Kubernetes Manifests for arm64 provides optimized YAML configurations to simplify your deployment process.
+Please note that at this time, we are not utilizing any storage solution other than local PV (persistent volume). Although Longhorn was initially tested, it proved to be too resource-intensive for a Pi Proxmox cluster and would crash without extensive fine-tuning.
 
-🚀 Scalable Configurations: Unlock the power of scalability on your arm64 infrastructure. Leverage horizontal pod autoscaling, replica sets, and stateful applications optimized for arm64, and elevate your cluster's performance.
+For those interested in Rancher, you can explore Techno Tim's deployment or refer to Network Chuck's video guide on how to set it up. Stay tuned for my upcoming comprehensive setup blog, where I will provide detailed insights into my entire configuration.
 
-🔒 Rock-Solid Reliability: Build a rock-solid foundation for your applications on arm64. Kubernetes Manifests for arm64 enables fault-tolerant setups, seamless utilization of persistent storage, and ensures high availability for your arm64-based Kubernetes clusters.
+## What Makes Kubernetes Manifests for ARM64 Special?
+
+Kubernetes Manifests for ARM64 is your ultimate secret weapon for harnessing the true power of Kubernetes on ARM64 architecture. Dive into a realm of cutting-edge deployments and unlock the endless possibilities of your ARM64-based Kubernetes clusters.
+
+## Key Features
+
+🌟 Effortless Deployments: Embark on a journey of effortless deployments tailored specifically for ARM64 architecture. Kubernetes Manifests for ARM64 provides optimized YAML configurations that simplify your deployment process, ensuring a smooth and hassle-free experience.
+
+🚀 Scalable Configurations: Unleash the full potential of scalability on your ARM64 infrastructure. Take advantage of horizontal pod autoscaling, replica sets, and stateful applications meticulously optimized for ARM64. Elevate your cluster's performance to new heights.
+
+🔒 Rock-Solid Reliability: Build a rock-solid foundation for your applications on ARM64. Kubernetes Manifests for ARM64 enables fault-tolerant setups, seamless utilization of persistent storage, and guarantees high availability for your ARM64-based Kubernetes clusters.
 
 ## Getting Started
 
-1. Install Kubernetes: Set up a Kubernetes cluster on your arm64 infrastructure. If you're new to Kubernetes on arm64, refer to the official documentation for detailed instructions.
+1. Kubernetes Installation: Set up a Kubernetes cluster on your ARM64 infrastructure. If you're new to Kubernetes on ARM64, refer to the official documentation for detailed instructions.
 
 2. Clone the Repository: Clone this repository to your local machine using the following command:
 
-https://github.com/SeanRiggs/kubernetes-manifests-arm64.git
+git clone https://github.com/SeanRiggs/kubernetes-manifests-arm64.git
 
-3. Explore the Manifests: Browse through our mind-bending collection of manifests inside the `manifests/` directory. Discover the possibilities and choose the ones optimized for arm64 architecture that align with your project.
 
-4. Customize and Apply: Modify the manifests to suit your application's requirements on arm64 architecture. Unleash your creativity and tailor the configurations to perfection. Once ready, apply the manifests to your arm64-based Kubernetes cluster using the `kubectl apply` command.
+3. Explore the Manifests: Delve into our awe-inspiring collection of manifests located in the `manifests/` directory. Discover the limitless potential and select the ones specifically optimized for ARM64 architecture that perfectly align with your project.
+
+4. Customize and Apply: Tailor the manifests to meet your application's requirements on ARM64 architecture. Unleash your creativity and fine-tune the configurations to perfection. Once ready, apply the manifests to your ARM64-based Kubernetes cluster using the `kubectl apply` command.
 
 ## Contribution Guidelines
 
-We believe that collaboration fuels innovation. If you have any mind-bending manifest creations or improvements to share for arm64 architecture, we welcome your contributions. To contribute to Kubernetes Manifests for arm64, please follow the guidelines outlined in [CONTRIBUTING.md](https://github.com/your-username/kubernetes-manifests-arm64/blob/main/CONTRIBUTING.md). (COMING SOON)
+We believe that collaboration fuels innovation. If you have any mind-bending manifest creations or improvements to share for ARM64 architecture, we welcome your contributions. To contribute to Kubernetes Manifests for ARM64, please follow the guidelines outlined in [CONTRIBUTING.md](https://github.com/your-username/kubernetes-manifests-arm64/blob/main/CONTRIBUTING.md). (COMING SOON)
 
-Let's unlock the true potential of Kubernetes on arm64 together!
+Let's unlock the true potential of Kubernetes on ARM64 together!
 
 ## Support
 
-If you have any questions, ideas, or need assistance with Kubernetes Manifests for arm64, don't hesitate to reach out to our stellar support team at [support@kubernetes-manifests-arm64.com](mailto:support@kubernetes-manifests-arm64.com). (COMING SOON)
+If you have any questions, ideas, or need assistance with Kubernetes Manifests for ARM64, don't hesitate to reach out to our stellar support team at [support@kubernetes-manifests-arm64.com](mailto:support@kubernetes-manifests-arm64.com). (COMING SOON)
 
-Get ready to conquer the arm64 universe with Kubernetes Manifests for arm64! 🎉
+Get ready to conquer the ARM64 universe with Kubernetes Manifests for ARM64! 🎉

@@ -23,12 +23,12 @@ spec:
               cpu: "0.5"
               memory: "512Mi"
           volumeMounts:
-            - name: data-volume
+            - name: nfs-data-volume #note that this is using nfs pv pvc and not local storage in bitwarden pv pvc yml file adjust as needed for storage
               mountPath: /data
       volumes:
-        - name: data-volume
+        - name: nfs-data-volume
           persistentVolumeClaim:
-            claimName: bitwardenrs-pvc
+            claimName: nfs
 ---
 apiVersion: v1
 kind: Service

@@ -1,6 +1,6 @@
 # Image Showcase
 
-![Image Showcase Logo](https://example.com/path/to/logo.png)
+![Image Showcase Logo](https://github.com/SeanRiggs/kubernetes-manifests-arm64/blob/main/Images/Showcase_Logo_2015.png)
 
 Welcome to the captivating Image Showcase! 🌟
 

@@ -56,8 +56,8 @@ If you have any questions, ideas, or need assistance with Kubernetes Manifests f
 
 Get ready to conquer the ARM64 universe with Kubernetes Manifests for ARM64! 🎉
 
-<div style="text-align:center">
-![Celtic Trinity Knot]
-(https://github.com/SeanRiggs/kubernetes-manifests-arm64/blob/main/Images/CeltTrinKnot.jpg)
-</div>
+<p align="center">
+  <img src="https://github.com/SeanRiggs/kubernetes-manifests-arm64/blob/main/Images/CeltTrinKnot.jpg" alt="Celtic Trinity Knot" width="300">
+</p>
+
 

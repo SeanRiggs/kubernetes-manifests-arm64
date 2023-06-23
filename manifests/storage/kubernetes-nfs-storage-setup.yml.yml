@@ -5,15 +5,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-pv-backups   # Name of the PersistentVolume
+  name: nfs-pv-backups
 spec:
   capacity:
-    storage: 50Gi   # Storage capacity for the PersistentVolume
+    storage: 50Gi
   accessModes:
-    - ReadWriteOnce   # Access mode for the PersistentVolume
+    - ReadWriteOnce
   nfs:
-    server: 192.168.128.81   # IP address of the NFS server
-    path: /Backups   # Path on the NFS server for backups
+    server: 192.168.128.81
+    path: /Backups
 
 # PersistentVolume for configuration
 apiVersion: v1
@@ -61,13 +61,13 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-pvc-backups   # Name of the PersistentVolumeClaim
+  name: nfs-pvc-backups
 spec:
   accessModes:
-    - ReadWriteOnce   # Access mode for the PersistentVolumeClaim
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi   # Requested storage capacity for the PersistentVolumeClaim
+      storage: 50Gi
 
 # PersistentVolumeClaim for configuration
 apiVersion: v1

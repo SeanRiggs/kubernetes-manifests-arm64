@@ -4,10 +4,14 @@ metadata:
   name: my-epic-nfs-storage-class
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-provisioner: k8s.io/nfs-provisioner
+  labels:
+    app: nfs-provisioner
+provisioner: kubernetes.io/nfs
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+volumeBindingMode: Immediate
+mountOptions:
+  - vers=4.1
 parameters:
   server: 192.168.128.81
   path: /KubCluster
-  readOnly: "false"
-accessModes:
-  - ReadWriteMany

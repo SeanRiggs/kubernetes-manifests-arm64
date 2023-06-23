@@ -1,45 +1,3 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: nfs-provisioner
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: nfs-provisioner
-  namespace: nfs-provisioner
----
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: nfs-provisioner-runner
-rules:
-  - apiGroups: [""]
-    resources: ["endpoints", "persistentvolumes", "pods"]
-    verbs: ["get", "list", "watch", "create", "delete"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["extensions"]
-    resources: ["thirdpartyresources"]
-    verbs: ["get", "list", "watch"]
----
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: run-nfs-provisioner
-subjects:
-  - kind: ServiceAccount
-    name: nfs-provisioner
-    namespace: nfs-provisioner
-roleRef:
-  kind: ClusterRole
-  name: nfs-provisioner-runner
-  apiGroup: rbac.authorization.k8s.io
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,8 +8,6 @@ spec:
   selector:
     matchLabels:
       app: nfs-provisioner
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -59,20 +15,27 @@ spec:
     spec:
       serviceAccountName: nfs-provisioner
       containers:
-      - name: nfs-provisioner
-        image: quay.io/external_storage/nfs-client-provisioner:latest
-        volumeMounts:
-        - name: nfs-client-root
-          mountPath: /persistentvolumes
-        env:
-        - name: PROVISIONER_NAME
-          value: nfs-provisioner
-        - name: NFS_SERVER
-          value: 192.168.128.81
-        - name: NFS_PATH
-          value: /KubCluster
+        - name: nfs-provisioner
+          image: quay.io/mauilion/nfs-client-provisioner-arm
+          env:
+            - name: PROVISIONER_NAME
+              value: nfs-provisioner
+            - name: NFS_SERVER
+              value: 192.168.128.81
+            - name: NFS_PATH
+              value: /KubCluster
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
       volumes:
-      - name: nfs-client-root
-        nfs:
-          server: 192.168.128.81
-          path: /KubCluster
+        - name: nfs-client-root
+          nfs:
+            server: 192.168.128.81
+            path: /KubCluster

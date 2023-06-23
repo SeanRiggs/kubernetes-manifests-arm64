@@ -16,7 +16,7 @@ spec:
       serviceAccountName: nfs-provisioner
       containers:
         - name: nfs-provisioner
-          image: quay.io/mauilion/nfs-client-provisioner-arm
+          image: quay.io/external_storage/nfs-client-provisioner:latest
           env:
             - name: PROVISIONER_NAME
               value: nfs-provisioner

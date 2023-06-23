@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: creative-pvc   # A creatively named PVC
+  name: my-epic-pvc  # Name of the PVC
 spec:
+  storageClassName: my-epic-nfs-storage-class  # Name of the StorageClass to use for provisioning
   accessModes:
-    - ReadWriteMany   # Access mode for the PersistentVolumeClaim, matching the access mode of the PersistentVolume
+    - ReadWriteMany  # Access mode for the PVC, allowing multiple Pods to read and write concurrently
   resources:
     requests:
-      storage: 50Gi   # Requested storage capacity for the PersistentVolumeClaim
-  storageClassName: my-epic-nfs-storage-class   # The name of the StorageClass to use for dynamic provisioning
-  # Add additional fields or parameters as needed for your specific use case
+      storage: 10Gi  # Requested storage size for the PVC, specifying 10 Gigabytes

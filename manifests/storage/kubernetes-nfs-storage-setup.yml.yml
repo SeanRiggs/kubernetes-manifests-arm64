@@ -1,0 +1,110 @@
+# Example of multiple NFS configurations
+# Adjust storage size, add storage class, and update path, names, and server IPs as needed
+
+# PersistentVolume for backups
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv-backups   # Name of the PersistentVolume
+spec:
+  capacity:
+    storage: 50Gi   # Storage capacity for the PersistentVolume
+  accessModes:
+    - ReadWriteOnce   # Access mode for the PersistentVolume
+  nfs:
+    server: 192.168.128.81   # IP address of the NFS server
+    path: /Backups   # Path on the NFS server for backups
+
+# PersistentVolume for configuration
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv-config
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 192.168.128.81
+    path: /Config
+
+# PersistentVolume for databases
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv-databases
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 192.168.128.81
+    path: /Databases
+
+# PersistentVolume for media share
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv-mediashare
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 192.168.128.81
+    path: /MediaShare
+
+# PersistentVolumeClaim for backups
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc-backups   # Name of the PersistentVolumeClaim
+spec:
+  accessModes:
+    - ReadWriteOnce   # Access mode for the PersistentVolumeClaim
+  resources:
+    requests:
+      storage: 50Gi   # Requested storage capacity for the PersistentVolumeClaim
+
+# PersistentVolumeClaim for configuration
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+
+# PersistentVolumeClaim for databases
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc-databases
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+
+# PersistentVolumeClaim for media share
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc-mediashare
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+
+#This configuration might be used when you have an NFS server and want to create PersistentVolumes and PersistentVolumeClaims
+# to provide storage for different purposes within your Kubernetes cluster. Each volume is allocated a specific capacity,
+# has an access mode of ReadWriteOnce (allowing it to be mounted by a single Pod), and is associated with the corresponding NFS server and path

@@ -105,6 +105,6 @@ spec:
     requests:
       storage: 50Gi
 
-#This configuration might be used when you have an NFS server and want to create PersistentVolumes and PersistentVolumeClaims
+# This configuration might be used when you have an NFS server and want to create PersistentVolumes and PersistentVolumeClaims
 # to provide storage for different purposes within your Kubernetes cluster. Each volume is allocated a specific capacity,
 # has an access mode of ReadWriteOnce (allowing it to be mounted by a single Pod), and is associated with the corresponding NFS server and path

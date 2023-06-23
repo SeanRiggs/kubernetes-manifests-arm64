@@ -1,13 +1,13 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: my-epic-nfs-storage-class   # Name of the StorageClass
+  name: my-epic-nfs-storage-class
   annotations:
-    storageclass.kubernetes.io/is-default-class: "true"   # Annotation to indicate if this is the default StorageClass
-provisioner: k8s.io/nfs-provisioner   # The provisioner responsible for creating the storage
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: k8s.io/nfs-provisioner
 parameters:
-  server: 192.168.128.81   # IP address of the NFS server
-  path: /KubCluster   # Path on the NFS server to be used for storage
-  readOnly: false   # Whether the storage should be read-only or read-write
+  server: 192.168.128.81
+  path: /KubCluster
+  readOnly: "false"
 accessModes:
-- ReadWriteMany   # Access mode for the storage, allowing multiple Pods to read and write concurrently
+  - ReadWriteMany

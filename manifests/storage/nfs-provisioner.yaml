@@ -16,7 +16,7 @@ spec:
       serviceAccountName: nfs-provisioner
       containers:
         - name: nfs-provisioner
-          image: quay.io/external_storage/nfs-client-provisioner:latest
+          image: kopkop/nfs-client-provisioner-arm64:latest
           env:
             - name: PROVISIONER_NAME
               value: nfs-provisioner

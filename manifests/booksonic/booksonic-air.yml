@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: booksonic-air-deployment
+  name: booksonic-air
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -13,38 +14,58 @@ spec:
         app: booksonic-air
     spec:
       containers:
-        - name: booksonic-air
-          image: lscr.io/linuxserver/booksonic-air:latest
-          env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
-            - name: TZ
-              value: "America/Denver"
-            - name: CONTEXT_PATH
-              #value: "url-base" # optional
-          ports:
-            - containerPort: 4040
-          volumeMounts:
-            - name: nfs
-              mountPath: "/config"
-            - name: nfs
-              mountPath: "/books"
+      - name: booksonic-air
+        image: linuxserver/booksonic-air:2201.1.0
+        env:
+        - name: TZ
+          value: "America/Denver"
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        volumeMounts:
+        - name: podcasts-volume
+          mountPath: /podcasts
+        - name: othermedia-volume
+          mountPath: /othermedia
+        - name: config-volume
+          mountPath: /config
+        - name: audiobooks-volume
+          mountPath: /audiobooks
+        ports:
+        - containerPort: 4040
+        resources:
+          limits:
+            cpu: "500m"  # 500 milliCPU units
+            memory: "512Mi"  # 512 Mebibytes
+          requests:
+            cpu: "100m"  # 100 milliCPU units
+            memory: "256Mi"  # 256 Mebibytes
       volumes:
-        - name: nfs
-          persistentVolumeClaim:
-            claimName: nfs       
-        
+      - name: podcasts-volume
+        persistentVolumeClaim:
+          claimName: booksonic-air-pvc
+      - name: othermedia-volume
+        persistentVolumeClaim:
+          claimName: booksonic-air-pvc
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: booksonic-air-pvc
+      - name: audiobooks-volume
+        persistentVolumeClaim:
+          claimName: booksonic-air-pvc
+
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: booksonic-air-service
+  name: booksonic-air
+  namespace: default
 spec:
   selector:
     app: booksonic-air
   ports:
-    - port: 4040
+    - protocol: TCP
+      port: 4040
       targetPort: 4040
-  type: LoadBalancer

@@ -63,6 +63,7 @@ metadata:
   name: booksonic-air
   namespace: default
 spec:
+  type: LoadBalancer
   selector:
     app: booksonic-air
   ports:

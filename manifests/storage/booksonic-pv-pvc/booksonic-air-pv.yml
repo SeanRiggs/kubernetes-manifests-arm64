@@ -1,12 +1,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: booksonic-air-pv
+  name: booknfs
 spec:
   capacity:
-    storage: 10Gi
+    storage: 256Gi
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
+  storageClassName: booknfs
   nfs:
     server: 192.168.128.200
-    path: /proxcluster
+    path: /proxcluster/booksonic
+  persistentVolumeReclaimPolicy: Retain
+    

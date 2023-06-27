@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: booksonic-air
-  namespace: default
 spec:
   replicas: 1
   selector:
@@ -14,46 +13,27 @@ spec:
         app: booksonic-air
     spec:
       containers:
-      - name: booksonic-air
-        image: linuxserver/booksonic-air:2201.1.0
-        env:
-        - name: TZ
-          value: "America/Denver"
-        - name: PUID
-          value: "1000"
-        - name: PGID
-          value: "1000"
-        volumeMounts:
-        - name: podcasts-volume
-          mountPath: /podcasts
-        - name: othermedia-volume
-          mountPath: /othermedia
-        - name: config-volume
-          mountPath: /config
-        - name: audiobooks-volume
-          mountPath: /audiobooks
-        ports:
-        - containerPort: 4040
-        resources:
-          limits:
-            cpu: "500m"  # 500 milliCPU units
-            memory: "512Mi"  # 512 Mebibytes
-          requests:
-            cpu: "100m"  # 100 milliCPU units
-            memory: "256Mi"  # 256 Mebibytes
+        - name: booksonic-air
+          image: linuxserver/booksonic-air:latest
+          env:
+            - name: TZ
+              value: "America/Denver"
+            - name: PUID
+              value: "1001"
+            - name: PGID
+              value: "1001"
+          volumeMounts:
+            - name: audiobooks-volume
+              mountPath: /audiobooks
+          ports:
+            - containerPort: 4040
+              protocol: TCP
+          securityContext:
+            privileged: true  # Add this line to enable privileged mode
       volumes:
-      - name: podcasts-volume
-        persistentVolumeClaim:
-          claimName: booksonic-air-pvc
-      - name: othermedia-volume
-        persistentVolumeClaim:
-          claimName: booksonic-air-pvc
-      - name: config-volume
-        persistentVolumeClaim:
-          claimName: booksonic-air-pvc
-      - name: audiobooks-volume
-        persistentVolumeClaim:
-          claimName: booksonic-air-pvc
+        - name: audiobooks-volume
+          persistentVolumeClaim:
+            claimName: booknfs
 
 
 ---
@@ -63,10 +43,10 @@ metadata:
   name: booksonic-air
   namespace: default
 spec:
-  type: LoadBalancer
   selector:
     app: booksonic-air
   ports:
-    - protocol: TCP
-      port: 4040
-      targetPort: 4040
+  - protocol: TCP
+    port: 4040
+    targetPort: 4040
+  type: LoadBalancer

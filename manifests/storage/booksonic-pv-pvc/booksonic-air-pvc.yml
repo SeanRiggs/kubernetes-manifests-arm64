@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: booksonic-air-pvc
+  name: booknfs
 spec:
   accessModes:
     - ReadWriteMany
+  storageClassName: booknfs
   resources:
     requests:
-      storage: 10Gi
-  selector:
-    matchLabels:
-      app: booksonic-air
+      storage: 20Gi
+ 

@@ -10,6 +10,6 @@ spec:
   storageClassName: booknfs
   nfs:
     server: 192.168.128.200
-    path: /proxcluster/booksonic
+    path: /proxcluster/audiobooks
   persistentVolumeReclaimPolicy: Retain
     

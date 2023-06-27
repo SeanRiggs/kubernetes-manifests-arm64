@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vscode
+spec:
+  capacity:
+    storage: 256Gi
+  accessModes:
+  - ReadWriteMany
+  storageClassName: vscode
+  nfs:
+    server: 192.168.128.200
+    path: /proxcluster/vscode
+  persistentVolumeReclaimPolicy: Retain
+    

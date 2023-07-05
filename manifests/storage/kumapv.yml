@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kuma
+spec:
+  capacity:
+    storage: 256Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /var/kuma/config
+  persistentVolumeReclaimPolicy: Retain

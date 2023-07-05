@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: vscode
+  name: emlocal
 spec:
   capacity:
     storage: 256Gi
   accessModes:
-  - ReadWriteMany
-  storageClassName: vscode
-  nfs:
-    server: 192.168.128.200
-    path: /proxcluster/vscode
+    - ReadWriteMany
+  hostPath:
+    path: /var/myapp/config
   persistentVolumeReclaimPolicy: Retain
-    
+

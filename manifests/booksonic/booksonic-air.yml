@@ -18,13 +18,11 @@ spec:
           env:
             - name: TZ
               value: "America/Denver"
-            - name: PUID
-              value: "1001"
-            - name: PGID
-              value: "1001"
           volumeMounts:
             - name: audiobooks-volume
               mountPath: /audiobooks
+            - name: config-volume
+              mountPath: /config
           ports:
             - containerPort: 4040
               protocol: TCP
@@ -34,7 +32,10 @@ spec:
         - name: audiobooks-volume
           persistentVolumeClaim:
             claimName: booknfs
-
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: bslocal
+      
 ---
 apiVersion: v1
 kind: Service

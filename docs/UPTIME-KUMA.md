@@ -2,6 +2,8 @@
 
 Use the quick start in the [README](../README.md). The deployment stores data in PVC `data` in namespace `uptime-kuma`, mounted at `/app/data`.
 
+SQLite is selected explicitly with `UPTIME_KUMA_DB_TYPE=sqlite`, so the first page asks you to create an administrator rather than choose a database. This bundle does not configure MariaDB.
+
 The default probes allow up to ten minutes for a fresh startup. An existing v1 database migration can take much longer: read [UPGRADING](UPGRADING.md) before moving data.
 
 For LAN access, use your existing reverse proxy/Ingress controller with TLS and authentication configured in Kuma. Keep the setup page private until the administrator account exists. Do not expose the service just to finish setup.

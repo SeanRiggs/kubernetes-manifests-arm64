@@ -75,6 +75,9 @@ spec:
           timeoutSeconds: 5
           periodSeconds: 30
           failureThreshold: 5
+        env:
+        - name: UPTIME_KUMA_DB_TYPE
+          value: sqlite
       volumes:
       - name: data
         persistentVolumeClaim:

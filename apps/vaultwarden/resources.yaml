@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vaultwarden
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: &id001
+      app.kubernetes.io/name: vaultwarden
+  template:
+    metadata:
+      labels: *id001
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: vaultwarden
+        image: vaultwarden/server:1.37.4
+        ports:
+        - name: http
+          containerPort: 8080
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        startupProbe:
+          httpGet: &id002
+            path: /alive
+            port: http
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 60
+        readinessProbe:
+          httpGet: *id002
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet: *id002
+          timeoutSeconds: 5
+          periodSeconds: 30
+          failureThreshold: 5
+        env:
+        - name: ROCKET_PORT
+          value: '8080'
+        - name: SIGNUPS_ALLOWED
+          value: 'false'
+        - name: INVITATIONS_ALLOWED
+          value: 'false'
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vaultwarden
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: vaultwarden
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http

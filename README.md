@@ -1,63 +1,46 @@
-# Kubernetes Manifests for ARM64
+# Kubernetes homelab manifests — ARM64 and AMD64
 
-![Kubernetes Manifests for ARM64 Logo](https://i0.wp.com/www.donaldsimpson.co.uk/wp-content/uploads/sites/6/2019/05/minikube.png?w=344&ssl=1)
+Small, understandable Kubernetes deployments for a home server or Raspberry Pi cluster. Each maintained app includes its own namespace, persistent storage claim, health probes, resource limits, and an internal service.
 
-Welcome to the extraordinary world of Kubernetes Manifests for ARM64! 🚀
+[![Validate and smoke test](https://github.com/SeanRiggs/kubernetes-manifests-arm64/actions/workflows/validate.yml/badge.svg)](https://github.com/SeanRiggs/kubernetes-manifests-arm64/actions/workflows/validate.yml)
 
-This repository houses an impressive collection of mind-blowing Kubernetes manifests specially designed to unleash the full potential of your ARM64 infrastructure. Experience seamless deployments, scalable configurations, and unparalleled reliability like never before.
+## What is maintained?
 
-## Infrastructure Details
+| Application | Image version | Start here |
+| --- | --- | --- |
+| Uptime Kuma | 2.5.8 | [Monitoring setup](docs/UPTIME-KUMA.md) |
+| Vaultwarden | 1.37.4 | [Password manager setup](docs/VAULTWARDEN.md) |
 
-These manifests have been meticulously built, deployed, and tested on the following infrastructure (adjust as needed):
+The original Booksonic Air, EmulatorJS, Bitwarden-named Vaultwarden, and storage examples are preserved in [legacy](legacy/README.md). LinuxServer has deprecated its Booksonic Air and EmulatorJS images; those deployments are historical references, not maintained installs. Existing users should read [the migration guide](docs/UPGRADING.md) before applying anything.
 
-- 4-node Proxmox cluster consisting of ARM64 Raspberry Pi 4 Model B 8GB devices.
-- 5-node high-availability Kubernetes k3s cluster. The cluster is built on 5 different virtual machines running Ubuntu Cloud Image (Jammy 22.04), leveraging etcd, KubeVIP, and MetalLB.
-- The cluster was deployed using Ansible, following Techno Tim's deployment method as demonstrated in this YouTube video: [Kubernetes Deployment by Techno Tim](https://youtu.be/CbkEWcUZ7zM).
-- Additionally, an NFS share is utilized, which is deployed on a separate Raspberry Pi 4 Model B 4GB running OMV (OpenMediaVault) with a 1TB USB hard drive.
+## First deployment: Uptime Kuma
 
-Please note that at this time, we are not utilizing any storage solution other than local PV (persistent volume). Although Longhorn was initially tested, it proved to be too resource-intensive for a Pi Proxmox cluster and would crash without extensive fine-tuning.
+You need an existing Kubernetes cluster, `kubectl` configured for it, and a default StorageClass that provisions writable local or block storage. K3s with its default local-path provisioner is one option. A 64-bit Linux server works too; Raspberry Pi hardware is not required. These files do not install Kubernetes.
 
-For those interested in Rancher, you can explore Techno Tim's deployment or refer to Network Chuck's video guide on how to set it up. Stay tuned for my upcoming comprehensive setup blog, where I will provide detailed insights into my entire configuration.
-
-## What Makes Kubernetes Manifests for ARM64 Special?
-
-Kubernetes Manifests for ARM64 is your ultimate secret weapon for harnessing the true power of Kubernetes on ARM64 architecture. Dive into a realm of cutting-edge deployments and unlock the endless possibilities of your ARM64-based Kubernetes clusters.
-
-## Key Features
-
-🌟 Effortless Deployments: Embark on a journey of effortless deployments tailored specifically for ARM64 architecture. Kubernetes Manifests for ARM64 provides optimized YAML configurations that simplify your deployment process, ensuring a smooth and hassle-free experience.
-
-🚀 Scalable Configurations: Unleash the full potential of scalability on your ARM64 infrastructure. Take advantage of horizontal pod autoscaling, replica sets, and stateful applications meticulously optimized for ARM64. Elevate your cluster's performance to new heights.
-
-🔒 Rock-Solid Reliability: Build a rock-solid foundation for your applications on ARM64. Kubernetes Manifests for ARM64 enables fault-tolerant setups, seamless utilization of persistent storage, and guarantees high availability for your ARM64-based Kubernetes clusters.
-
-## Getting Started
-
-1. Kubernetes Installation: Set up a Kubernetes cluster on your ARM64 infrastructure. If you're new to Kubernetes on ARM64, refer to the official documentation for detailed instructions.
-
-2. Clone the Repository: Clone this repository to your local machine using the following command:
-
+```sh
 git clone https://github.com/SeanRiggs/kubernetes-manifests-arm64.git
+cd kubernetes-manifests-arm64
+kubectl config current-context
+kubectl get nodes -o wide
+kubectl get storageclass
+kubectl apply -k apps/uptime-kuma
+kubectl -n uptime-kuma rollout status deployment/uptime-kuma --timeout=600s
+kubectl -n uptime-kuma port-forward service/uptime-kuma 3001:3001
+```
 
+Open **http://localhost:3001** on the computer running port-forward and create your administrator account. Keep the terminal open. The service is internal to your cluster; port-forward listens on localhost by default. Follow the app guide for LAN access.
 
-3. Explore the Manifests: Delve into our awe-inspiring collection of manifests located in the `manifests/` directory. Discover the limitless potential and select the ones specifically optimized for ARM64 architecture that perfectly align with your project.
+## Storage and safety
 
-4. Customize and Apply: Tailor the manifests to meet your application's requirements on ARM64 architecture. Unleash your creativity and fine-tune the configurations to perfection. Once ready, apply the manifests to your ARM64-based Kubernetes cluster using the `kubectl apply` command.
+- Each app runs one replica with a `Recreate` update strategy. This avoids overlapping database writers during upgrades; it is not high availability.
+- SQLite data belongs on local or block storage, not NFS/SMB. [Storage guide](docs/STORAGE.md) covers customization, backups, and pending claims.
+- Containers run as UID/GID 1000 without privileged mode or a service-account token. No root permission-fixing container is included.
+- Services are `ClusterIP`. Ingress, TLS, DNS, and network access policies depend on your cluster and must be configured separately. ClusterIP does not isolate an app from other cluster workloads.
+- Do not delete a namespace or PVC as an uninstall shortcut: your StorageClass may delete the underlying data. Back up first.
+- Apply one app with `kubectl apply -k apps/<app>`; never recursively apply the repository root.
 
-## Contribution Guidelines
+## Test and contribute
 
-We believe that collaboration fuels innovation. If you have any mind-bending manifest creations or improvements to share for ARM64 architecture, we welcome your contributions. To contribute to Kubernetes Manifests for ARM64, please follow the guidelines outlined in [CONTRIBUTING.md](https://github.com/SeanRiggs/kubernetes-manifests-arm64/blob/main/CONTRIBUTING.md).
+[Testing](docs/TESTING.md) explains static validation and disposable Kubernetes tests on native AMD64 and ARM64 runners. Tests cover fresh startup, HTTP health, non-root execution, and data persistence across pod replacement. They do not certify Raspberry Pi hardware, existing database upgrades, storage failure recovery, or complete password-manager workflows.
 
-Let's unlock the true potential of Kubernetes on ARM64 together!
-
-## Support
-
-If you have any questions, ideas, or need assistance with Kubernetes Manifests for ARM64, don't hesitate to reach out to our stellar support team at [support@kubernetes-manifests-arm64.com](mailto:support@kubernetes-manifests-arm64.com). (COMING SOON)
-
-Get ready to conquer the ARM64 universe with Kubernetes Manifests for ARM64! 🎉
-
-<p align="center">
-  <img src="https://github.com/SeanRiggs/kubernetes-manifests-arm64/blob/main/Images/CeltTrinKnot.jpg" alt="Celtic Trinity Knot" width="300">
-</p>
-
-
+Have a useful homelab app or a better deployment? See [CONTRIBUTING.md](CONTRIBUTING.md). Keep examples portable, document storage and upgrade behavior, and bring a reproducible test. Report problems through [GitHub issues](https://github.com/SeanRiggs/kubernetes-manifests-arm64/issues), with secrets removed.
